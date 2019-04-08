@@ -1,0 +1,23 @@
+.cart_section {
+  .cart_area {
+    width: 100%;
+    margin-top: 15px;
+    h1 {
+      font-size: 20px;
+      padding: 10px;
+      background: black;
+      color: white;
+      font-weight: 500;
+    }
+    .cart_items {
+      table {
+        tr {
+          td: {
+            width: 12%;
+            padding: 20px;
+          }
+        }
+      }
+    }
+  }
+}
