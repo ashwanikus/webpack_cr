@@ -3,7 +3,7 @@ import path from "path";
 
 const server = express();
 const webpack = require("webpack");
-const config = require("../../config/webpack.dev");
+const config = require("../../config/webpack.prod");
 const compiler = webpack(config);
 
 const webpackDevMiddleware = require("webpack-dev-middleware")(

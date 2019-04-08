@@ -1,14 +1,14 @@
-require("../src/scss/cart.scss");
-require("../src/scss/products.scss");
-require("../src/scss/login.scss");
-require("../src/scss/carousel.scss");
-require("../src/scss/query.scss");
-require("../src/scss/home.scss");
-require("../src/index.html");
-require("../src/login.html");
-require("../src/signup.html");
-require("../src/products.html");
-require("../src/cart.html");
+require("../../src/scss/cart.scss");
+require("../../src/scss/products.scss");
+require("../../src/scss/login.scss");
+require("../../src/scss/carousel.scss");
+require("../../src/scss/query.scss");
+require("../../src/scss/home.scss");
+require("../../src/index.html");
+require("../../src/login.html");
+require("../../src/signup.html");
+require("../../src/products.html");
+require("../../src/cart.html");
 
 
 const header = `<div class="row">
