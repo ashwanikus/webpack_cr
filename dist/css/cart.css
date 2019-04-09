@@ -1,0 +1,13 @@
+.cart_section .cart_area {
+  width: 100%;
+  margin-top: 15px; }
+  .cart_section .cart_area h1 {
+    font-size: 20px;
+    padding: 10px;
+    background: black;
+    color: white;
+    font-weight: 500; }
+  .cart_section .cart_area .cart_items table tr {
+    td-width: 12%;
+    td-padding: 20px; }
+

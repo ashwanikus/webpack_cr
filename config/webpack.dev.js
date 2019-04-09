@@ -1,50 +1,39 @@
-const path = require('path');
-//const ExtractTextPlugin = require('extract-text-webpack-plugin');
-//const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const cssOutput = 'css/style.css';
 
 module.exports = {
-    entry: ["babel-polyfill", "./src/js/app.js"],
+    entry: {
+        "js/app": "./src/js/app.js",
+        "cart": "./src/scss/cart.scss",
+        "products": "./src/scss/products.scss",
+        "login": "./src/scss/login.scss",
+        "carousel": "./src/scss/carousel.scss",
+        "query": "./src/scss/query.scss",
+        "home": "./src/scss/home.scss"
+    },
     mode: "development",
     output: {
-        path: path.resolve(__dirname, "../dist"),
         filename: "[name]-bundle.js",
-        publicPath: '/js'
+        path: path.resolve(__dirname, "../dist"),
+        publicPath: "/"
     },
     devServer: {
-        contentBase: 'dist',
-        overlay: true,
-        hot:true,
-        stats: {
-            colors: true
-        }
+        contentBase: "dist",
+        overlay: true
     },
     module: {
         rules: [
             {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'babel-loader'
-                    }
-                ]
-            },
-            {
-                test: /\.(sc|sa|c)ss$/,
-                use: [
-                    {
-                        loader: 'style-loader'
-                    },
-                    {
-                        loader: 'css-loader'
-                    },
-                    {
-                        loader: 'sass-loader'
-                    }
-                ]
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({
+                    use: ['css-loader', 'sass-loader'],
+                    fallback: 'style-loader'
+                })
             },
             {
                 test: /\.html$/,
@@ -54,20 +43,17 @@ module.exports = {
                         options: {
                             name: "[name].html"
                         }
-                    },
-                    {
+                    }, {
                         loader: 'extract-loader'
-                    },
-                    {
+                    }, {
                         loader: 'html-loader',
                         options: {
                             attrs: "[img:src]"
                         }
                     }
                 ]
-            },
-            {
-                test: /\.(png|jpeg|jpg|gif)$/,
+            }, {
+                test: /\.(jpg|jpeg|png|gif)$/,
                 use: [
                     {
                         loader: 'file-loader',
@@ -80,6 +66,9 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),        
+        new ExtractTextPlugin(cssOutput),
+        new CopyWebpackPlugin([
+            { from: 'src/images', to: 'images' }
+        ])
     ]
 };

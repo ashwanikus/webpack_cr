@@ -1,49 +1,34 @@
-const path = require('path');
-//const ExtractTextPlugin = require('extract-text-webpack-plugin');
-//const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
-
-const cssOutput = 'css/style.css';
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: ["babel-polyfill", "./src/js/app.js"],
+    entry: {
+        "js/app": "./src/js/app.js",
+        "css/cart": "./src/scss/cart.scss",
+        "css/products": "./src/scss/products.scss",
+        "css/login": "./src/scss/login.scss",
+        "css/carousel": "./src/scss/carousel.scss",
+        "css/query": "./src/scss/query.scss",
+        "css/home": "./src/scss/home.scss"
+    },
     mode: "production",
     output: {
-        path: path.resolve(__dirname, "../dist"),
         filename: "[name]-bundle.js",
-        publicPath: '/js'
+        path: path.resolve(__dirname, "../dist"),
+        publicPath: "/"
     },
     devServer: {
-        contentBase: 'dist',
-        overlay: true,
-        hot:true,
-        stats: {
-            colors: true
-        }
+        contentBase: "dist",
+        overlay: true
     },
     module: {
         rules: [
             {
-                test: /\.js$/,
-                exclude: /node_modules/,
+                test: /\.s?css$/,
                 use: [
-                    {
-                        loader: 'babel-loader'
-                    }
-                ]
-            },
-            {
-                test: /\.(sc|sa|c)ss$/,
-                use: [
-                    {
-                        loader: 'style-loader'
-                    },
-                    {
-                        loader: 'css-loader'
-                    },
-                    {
-                        loader: 'sass-loader'
-                    }
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    "sass-loader"
                 ]
             },
             {
@@ -51,35 +36,22 @@ module.exports = {
                 use: [
                     {
                         loader: 'file-loader',
-                        options: {
-                            name: "[name].html"
+                        options:{
+                            name:"[name].html"
                         }
-                    },
-                    {
+                    }, {
                         loader: 'extract-loader'
-                    },
-                    {
-                        loader: 'html-loader',
-                        options: {
-                            attrs: "[img:src]"
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.(png|jpeg|jpg|gif)$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: "images/[name].[ext]"
-                        }
+                    }, {
+                        loader: 'html-loader'
                     }
                 ]
             }
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),        
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[id].css"
+        })
     ]
 };
