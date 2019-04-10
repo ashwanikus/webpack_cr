@@ -38,6 +38,10 @@ section {
   }
 }
 
+.prev, .next{
+  z-index: 999;
+}
+
 
 .row {
   display: flex;
