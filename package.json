@@ -5,12 +5,18 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config=config/webpack.dev.js --open",
-    "build": "webpack --config=config/webpack.prod.js"
+    "build": "webpack --config=config/webpack.dev.js",
+    "dev": "node src/server/main.js"
   },
   "keywords": [],
   "author": "Ashwani Kumar",
   "license": "ISC",
   "dependencies": {
+    "@babel/core": "^7.4.3",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5",
+    "babel-preset-env": "^1.7.0",
     "copy-webpack-plugin": "^5.0.2",
     "css-loader": "^2.1.1",
     "extract-loader": "^3.1.0",
@@ -24,6 +30,9 @@
     "style-loader": "^0.23.1",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
-    "webpack-dev-server": "^3.3.0"
-  }
+    "webpack-dev-middleware": "^3.6.2",
+    "webpack-dev-server": "^3.3.0",
+    "webpack-hot-middleware": "^2.24.3"
+  },
+  "devDependencies": {}
 }
