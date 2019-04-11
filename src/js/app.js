@@ -64,7 +64,6 @@ document.getElementById("footer").innerHTML = footer;
 var pathname = window.location.pathname;
 switch (pathname) {
   case '/index.html':
-    console.log(window.location.pathname);
     var categoriesXHttp = new XMLHttpRequest();
     categoriesXHttp.open("GET", "categories", true);
     categoriesXHttp.onload = function () {
@@ -123,7 +122,9 @@ switch (pathname) {
     }
     break;
   case '/products.html':
-    console.log(window.location.pathname);
+
+       
+
     break;
   case '/login.html':
     console.log(window.location.pathname);
