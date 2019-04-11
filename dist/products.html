@@ -31,16 +31,20 @@
     </div>
     <script type="text/x-handlebars-template" id="productMenuTemplates">
         {{#each categories}}
-        <li><a onclick="renderProducts('{{id}}')">{{name}}</a></li>
+            {{#ifFirstIndex @index}}
+                <li><a onclick="renderProducts('{{id}}')" class="nav_link active">{{name}}</a></li>
+            {{else}}
+                <li><a onclick="renderProducts('{{id}}')" class="nav_link">{{name}}</a></li>
+            {{/ifFirstIndex}}
         {{/each}}
     </script>
     <script type="text/x-handlebars-template" id="productListingTemplates">
         {{#each products}}
         <div class="items">
-            <h3>{{name}}</h3>
+            <h3 title="{{name}}">{{name}}</h3>
             <div class="product_Details">
                 <span><img src="{{imageURL}}" alt="" srcset=""></span>
-                <p>{{description}}</p>
+                <p title="{{description}}">{{description}}</p>
                 <div class="price_tag">
                     <a href="#" class="btn-price">Buy Now <span>MRP Rs.{{price}}</span></a>
                 </div>
@@ -51,6 +55,16 @@
     <footer id="footer"></footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.1/handlebars.js"></script>
     <script>
+        Handlebars.registerHelper('ifFirstIndex', function (index, options) {
+            if (index == 0) {
+                return options.fn(this);
+            } else {
+                return options.inverse(this);
+            }
+        });
+        // --------------------------------------------- //
+        // fetching the category on product listing
+        // --------------------------------------------- //
         var prod_categoriesXHttp = new XMLHttpRequest();
         prod_categoriesXHttp.open("GET", "categories", true);
         prod_categoriesXHttp.onload = function () {
@@ -66,7 +80,6 @@
         }
         prod_categoriesXHttp.send();
 
-
         function createProdCategoryContainer(data) {
             var slideshowTemplates = document.getElementById("productMenuTemplates").innerHTML;
             var slideshowCompiledTemplate = Handlebars.compile(slideshowTemplates);
@@ -74,9 +87,26 @@
 
             var categoryContainer = document.getElementById("productMenu");
             categoryContainer.innerHTML += generatedHtml;
+
+            var header = document.getElementById("productMenu");
+            var btns = header.getElementsByClassName("nav_link");
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].addEventListener("click", function () {
+                    var current = document.getElementsByClassName("active");
+                    current[0].className = current[0].className.replace(" active", "");
+                    this.className += " active";
+                });
+            }
         }
+        // --------------------------------------------- //
+        //end fetching the category on product listing
+        // --------------------------------------------- //
 
 
+
+        // --------------------------------------------- //
+        // fetching the products on product listing
+        // --------------------------------------------- //
         var productsXHttp = new XMLHttpRequest();
         productsXHttp.open("GET", "products", true);
         productsXHttp.onload = function () {
@@ -98,12 +128,20 @@
             var generatedHtml = slideshowCompiledTemplate(data);
 
             var categoryContainer = document.getElementById("product_listing");
-            categoryContainer.innerHTML += generatedHtml;
+            categoryContainer.innerHTML = generatedHtml;
         }
+        // --------------------------------------------- //
+        // end fetching the products on product listing
+        // --------------------------------------------- //
 
+
+
+        // --------------------------------------------- //
+        // products filter on product listing
+        // --------------------------------------------- //
         function renderProducts(id) {
             var productsByIdXHttp = new XMLHttpRequest();
-            productsByIdXHttp.open("GET", "products?id="+id, true);
+            productsByIdXHttp.open("GET", "products?id=" + id, true);
             productsByIdXHttp.onload = function () {
                 if (productsByIdXHttp.status >= 200 && productsByIdXHttp.status < 400) {
                     var data = JSON.parse(productsByIdXHttp.responseText);
@@ -117,7 +155,13 @@
                 console.log("Connection Error");
             }
             productsByIdXHttp.send();
-        }</script>
+        }
+        // --------------------------------------------- //
+        // end products filter on product listing
+        // --------------------------------------------- //
+
+
+    </script>
 <script type="text/javascript" src="main.js"></script></body>
 
 </html>

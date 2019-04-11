@@ -1,5 +1,6 @@
 require("babel-runtime/regenerator");
 require("webpack-hot-middleware/client?reload=true");
+require('../favicon.ico');
 
 
 const header = `<div class="row">
@@ -60,77 +61,3 @@ const footer = `<div class="row">
 
 document.getElementById("header").innerHTML = header;
 document.getElementById("footer").innerHTML = footer;
-
-var pathname = window.location.pathname;
-switch (pathname) {
-  case '/index.html':
-    var categoriesXHttp = new XMLHttpRequest();
-    categoriesXHttp.open("GET", "categories", true);
-    categoriesXHttp.onload = function () {
-      if (categoriesXHttp.status >= 200 && categoriesXHttp.status < 400) {
-        var data = JSON.parse(categoriesXHttp.responseText);
-        createCategoryContainer(data);
-      } else {
-        console.log("We conected to the server, but it returned an error.");
-      }
-    }
-    categoriesXHttp.onerror = function () {
-      console.log("Connection Error");
-    }
-    categoriesXHttp.send();
-
-    var bannerXHttp = new XMLHttpRequest();
-    bannerXHttp.open("GET", "banners", true);
-    bannerXHttp.onload = function () {
-      if (bannerXHttp.status >= 200 && bannerXHttp.status < 400) {
-        var data = JSON.parse(bannerXHttp.responseText);
-        createSlideshow(data);
-      } else {
-        console.log("We conected to the server, but it returned an error.");
-      }
-    }
-    bannerXHttp.onerror = function () {
-      console.log("Connection Error");
-    }
-    bannerXHttp.send();
-
-
-    function createCategoryContainer(data) {
-      console.log("Data: ", data);
-      var categoryTemplate = document.getElementById("categoryTemplates").innerHTML;
-      var compiledTemplate = Handlebars.compile(categoryTemplate);
-      var generatedHtml = compiledTemplate(data);
-
-      var categoryContainer = document.getElementById("category_container");
-      categoryContainer.innerHTML = generatedHtml;
-    }
-
-    function createSlideshow(data) {
-      var slideshowTemplates = document.getElementById("slideshowTemplates").innerHTML;
-      var slideshowCompiledTemplate = Handlebars.compile(slideshowTemplates);
-      var generatedHtml = slideshowCompiledTemplate(data);
-
-      var categoryContainer = document.getElementById("slideshow");
-      categoryContainer.innerHTML += generatedHtml;
-
-      showSlides(slideIndex);
-
-      var elem = document.getElementById("next");
-      setInterval(function () {
-        elem.click();
-      }, 4000);
-    }
-    break;
-  case '/products.html':
-
-       
-
-    break;
-  case '/login.html':
-    console.log(window.location.pathname);
-    break;
-  case '/signup.html':
-    console.log(window.location.pathname);
-    break;
-}
-

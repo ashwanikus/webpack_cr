@@ -16,8 +16,8 @@ module.exports = {
         "./src/scss/home.scss"
     ],
     mode: "development",
-    devServer:{
-        contentBase:'dist',
+    devServer: {
+        contentBase: 'dist',
         overlay: true
     },
     output: {
@@ -47,6 +47,10 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                test: /\.ico$/,
+                loader: 'file-loader?name=[name].[ext]'  // <-- retain original file name
             }
         ]
     },

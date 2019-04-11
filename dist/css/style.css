@@ -135,6 +135,7 @@
     color: #000000;
     display: block; }
   .sidenav a:hover {
+    cursor: pointer;
     color: #000000; }
   .sidenav label,
   .sidenav input {
@@ -175,14 +176,20 @@
         background-color: #f9f9f9;
         border-radius: 50% 50% / 20px 20px; }
       .product .product_listing .items h3 {
+        height: 100px;
         font-size: 20px;
         font-weight: 700;
         margin-bottom: 30px; }
       .product .product_listing .items p {
         background-color: #f0f0f0;
         font-weight: 600;
+        max-width: 100%;
         font-size: 14px;
-        padding: 5px; }
+        padding: 5px;
+        height: 90px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block; }
       .product .product_listing .items .price_tag {
         margin: 15px 0px 10px 0px;
         width: 100%;
@@ -348,7 +355,8 @@
 
 .active,
 .dot:hover {
-  background-color: #717171; }
+  background-color: #717171;
+  color: white !important; }
 
 /* Fading animation */
 .fade {
